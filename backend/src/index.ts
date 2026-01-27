@@ -1,7 +1,14 @@
-import express from 'express';
-import {ENV} from './config/env';
-import { clerkMiddleware } from '@clerk/express';
-import cors from 'cors'
+import express from "express";
+import cors from "cors";
+import path from "path";
+
+import { ENV } from "./config/env";
+import { clerkMiddleware } from "@clerk/express";
+
+
+import userRoutes from "./route/userRoutes";
+import productRoutes from "./route/productRoutes";
+import commentRoutes from "./route/commentRoutes";
 
 
 const app = express();
@@ -16,7 +23,11 @@ app.use(express.urlencoded({ extended: true })); // parses form data (like HTML 
 
 app.get('/',(req,res)=>{
     res.send("Hello from Home page")
-})
+});
+
+app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/comments", commentRoutes);
 
 app.listen(ENV.PORT, ()=>{
     console.log(`App is running in http://localhost:${ENV.PORT}`);
