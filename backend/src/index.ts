@@ -41,9 +41,9 @@ if (ENV.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
   // handle SPA routing - send all non-API routes to index.html - react app
-  app.get("*", (req, res) => {
+  app.get("/{*any}", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
   });
 }
 
-app.listen(ENV.PORT, () => console.log(`Server is up and running on PORT:`, ENV.PORT));
+app.listen(ENV.PORT, () => console.log("Server is up and running on PORT:", ENV.PORT));
