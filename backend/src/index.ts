@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from "cors";
 import path from "path";
 
@@ -19,7 +19,7 @@ app.use(clerkMiddleware()); // auth obj will be attached to the req
 app.use(express.json()); // parses JSON request bodies.
 app.use(express.urlencoded({ extended: true })); // parses form data (like HTML forms).
 
-app.get("/api/health", (req: Request, res: Response) => {
+app.get("/api/health", (req, res) => {
   res.json({
     message: "Welcome to Productify API - Powered by PostgreSQL, Drizzle ORM & Clerk Auth",
     endpoints: {
@@ -42,7 +42,7 @@ if (ENV.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
   // SPA fallback (send all non-API routes to React)
-  app.get("*", (req: Request, res: Response) => {
+  app.get("/*", (req, res) => {
     // Avoid sending index.html for API routes
     if (req.path.startsWith("/api")) {
       return res.status(404).json({ error: "API route not found" });
